@@ -1,11 +1,30 @@
 var express = require('express');
 var router = express.Router();
 var Categories = require('./../../models/categories');
+var Product = require('./../../models/product');
 
 
 /* GET users listing. */
-router.get('/', function(req, res, next) {
-  res.render("admin/index",{"test":"test"})
+router.get('/', async  function(req, res, next) {
+  const productsPromise   = Product.find();
+  const categoriesPromise = Categories.find();
+  const products   = await productsPromise;
+  const categories = await categoriesPromise;
+
+  // let test = new Product({
+  //   warranty: "hihi"
+  // })
+  // await  test.save()
+
+  await  Product.deleteMany({warranty: "hihi"}, function (err, response) {
+    if (err) {
+      console.log(err)
+    }
+    console.log(response)
+  })
+
+  res.render("admin/index",{data: {products, categories}})
+
 });
 router.get('/products', function(req, res, next) {
   res.render("admin/products",{"products":"products"})

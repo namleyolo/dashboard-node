@@ -1,19 +1,53 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Category</title>
+    <base href="/public"/>
+    <link rel="stylesheet" type="text/css" href="stylesheets/bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="stylesheets/datepicker3.css">
+    <link rel="stylesheet" type="text/css" href="stylesheets/bootstrap-table.css">
+    <link rel="stylesheet" type="text/css" href="stylesheets/styles.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
 </head>
 <body>
-    <o>Hello</o>
-    <div>
-        <% val.forEach((entry) => { %>
-        
-            <p>Name :  <%= entry.name %></p>
-            <p>Quantity:  <%= entry.quantity %></p>
-        <% }) %>
+<%- include('navbar'); -%>
+<%- include('sidebar'); -%>
 
+<div class="col-sm-9 col-sm-offset-3 col-lg-10 col-lg-offset-2 main">
+    <h4>Danh mục</h4>
+    <div class="table-responsive">
+        <table class="table table-dark table-striped table-hover">
+            <thead>
+            <tr class="table-primary">
+                <th scope="col">#</th>
+                <th scope="col">Name</th>
+                <th scope="col">Quantity</th>
+                <th scope="col">Edit</th>
+                <th scope="col">Delete</th>
+            </tr>
+            </thead>
+            <tbody>
+            <% val.forEach((entry, key) => { %>
+                <tr class="table-primary">
+                    <th scope="row"><%= key + 1 %></th>
+                    <td class="table-active"><%= entry.name %> </td>
+                    <td><%= entry.quantity %></td>
+                    <td><i class="material-icons ">edit</i></td>
+                    <td><i class="material-icons text-danger">delete_sweep</i></td>
+                </tr>
+              <% }) %>
+            </tbody>
+        </table>
     </div>
+</div>
+
 </body>
+<script src="javascripts/jquery-1.11.1.min.js"></script>
+<script src="javascripts/bootstrap.min.js"></script>
+
 </html>
