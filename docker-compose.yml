@@ -1,6 +1,18 @@
 version: "3.3"
 services:
   mongo:
-    image: mongo
+    image: mongo:latest
     ports:
-      - "27017:27017"
+      - 27017
+    volumes:
+      - ./mongo-data:/mongodb_data
+    deploy:
+      replicas: 1
+  backend:
+    image: namhoangle/notification_service:debug
+    ports:
+      - 3001:3001
+    depends_on:
+      - mongo
+    deploy:
+      replicas: 3

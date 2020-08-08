@@ -15,7 +15,7 @@
 <body>
     <div class="container">
         <div class="row">
-            <% 
+            <%
                if (locals.error){ %>
                    <p> <%= error %> </p>
                 <%
@@ -23,7 +23,7 @@
             %>
             <form action="dashboard/login" method="POST">
                 <div class="form-group">
-                    <input type="text" name="username" class="form-control" placeholder="Username" />
+                    <input type="email" name="email" class="form-control" placeholder="email"/>
                 </div>
                 <div class="form-group">
                     <input type="password" name="password" class="form-control"  placeholder="Password" />

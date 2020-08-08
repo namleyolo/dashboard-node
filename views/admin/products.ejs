@@ -19,24 +19,146 @@
 <%- include('sidebar'); -%>
 
 <div class="col-sm-9 col-sm-offset-3 col-lg-10 col-lg-offset-2 main">
-        <div class="form-group">
-            <label for="name">Email address</label>
-            <input name="name" id="name" class="form-control" placeholder="tên sản phẩm" />
+    <button type="button" class="btn btn-primary " data-toggle="modal" data-target="#exampleModal">
+        Add Products
+    </button>
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <form method="post" id="test">
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Product name</label>
+                            <input type="text" class="form-control" id="name" name="name" aria-describedby="name"
+                                   placeholder="Enter name">
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputPassword1">Accessories</label>
+                            <input type="password" class="form-control" name="accessories" id="exampleInputPassword1"
+                                   placeholder="Accessories">
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputPassword1">Password</label>
+                            <input type="password" class="form-control" name="password" id="exampleInputPassword1"
+                                   placeholder="Password">
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputPassword1">Price</label>
+                            <input type="number" class="form-control" name="price" id="price-input" placeholder="Price">
+                        </div>
+
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                    </form>
+
+                </div>
+            </div>
         </div>
-        <div class="form-group">
-            <input name="" class="form-control" placeholder="giá sản phẩm " />
-        </div>ẩm
-        <div class="form-group">
-            <input name="" class="form-control" placeholder=""  />
-        </div>
-        <div class="form-group">
-            <input name="" class="form-control" />
-        </div>
+    </div>
+    <div class="table-responsive products">
+        <table class="table table-dark table-striped table-hover">
+            <% if (val.length <= 0) { %>
+                <h1>Không có dữ liệu</h1>
+            <% } %>
+            <thead>
+            <tr class="table-primary">
+                <th scope="col">#</th>
+                <th scope="col">Name</th>
+                <th scope="col">Cate name</th>
+                <th scope="col">Price</th>
+                <th scope="col">Image</th>
+                <th scope="col">Status</th>
+                <th scope="col">Edit</th>
+                <th scope="col">Delete</th>
+            </tr>
+            </thead>
+            <tbody>
+            <% val.forEach((entry, key) => { %>
+                <tr class="table-primary">
+                    <th scope="row"><%= key + 1 %></th>
+                    <td class="table-active">   <%= entry.name %> </td>
+                    <td class="table-active">   <%= entry.cat_id.name %> </td>
+                    <td><%= entry.price + " đ" %></td>
+                    <td><img class="phone-img" src="images/note10.jpg"></td>
+                    <td>
+                        <%
+                        if (entry.status == 1){ %>
+                            <p>
+                                <button type="button" class="btn btn-primary">Còn hàng</button>
+                            </p>
+                        <% } else { %>
+                            <p>
+                                <button type="button" class="btn btn-warning">Tạm hết hàng</button>
+                            </p>
+                        <% }
+                        %>
+                    </td>
+                    <td><i class="material-icons ">edit</i></td>
+                    <td><i class="material-icons text-danger">delete_sweep</i></td>
+                </tr>
+            <% }) %>
+
+            </tbody>
+
+        </table>
+        <nav aria-label="Page navigation example">
+            <ul class="pagination">
+                <li class="page-item <% if (currentPage == 1) { %> disabled <% } %> ">
+                    <a class="page-link" href="/dashboard/products?page=<%= parseInt(currentPage) - 1 %> ">Previous</a>
+                </li>
+                <% var i = 1;
+                if (currentPage > 3) {
+                    i = +currentPage - 2;
+                } %>
+                <% if (i !== 1) { %>
+                    <li class="disabled"><a>...</a></li>
+                <% } %>
+                <% for (i; i <= pages; i++) { %>
+                    <% if (currentPage == i) { %>
+                        <li class="active"><span><%= i %> <span class="sr-only"></span>(current)
+                                %>
+                            </span></li>
+                    <% } else { %>
+                        <li><a href="/dashboard/products?page=<%= i %>"><%= i %></a></li>
+                    <% } %>
+                    <% if (i == +currentPage + 2) { %>
+                        <li class="disabled"><a>...</a></li>
+                    <% break; } %>
+                <% } %>
+                <% if (currentPage != pages) { %>
+                    <li><a href="/dashboard/products?page=<%= pages %>">Last</a></li>
+                <% } %>
+
+            </ul>
+        </nav>
+    </div>
+
 
 </div>
 
 </body>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
 <script src="javascripts/jquery-1.11.1.min.js"></script>
 <script src="javascripts/bootstrap.min.js"></script>
 
+<script>
+
+    $("#test").submit(function (e) {
+//        alert(e)
+        e.preventDefault();
+        $.ajax({
+            url: "http://localhost:3001/dashboard/test",
+            type: "POST",
+            data: {
+                'name': $('#price-input').val(),
+                'password': 'India',
+                'price': '1222023',
+            },
+            success: function (data) {
+                console.log(data);
+            }
+        });
+    });
+</script>
 </html>

@@ -6,7 +6,7 @@ var productSchema = new mongoose.Schema({
         default: 'No product name',
         require : true,
     },
-    category_id : {type : mongoose.Schema.ObjectId},
+    cat_id: {type: mongoose.Schema.ObjectId, ref: 'categories'},
     image : {type : String},
     price : {type :String},
     warranty: {type : String},
@@ -16,6 +16,16 @@ var productSchema = new mongoose.Schema({
     status : {type: Number},
     featured : {type: Number},
     details : {type: String}
+}, {
+    timestamps: true,
+    toJSON: {virtuals: true}
+})
+
+productSchema.virtual("cat", {
+    ref: 'categories', // The model to use
+    localField: 'cat_id', // Find people where `localField`
+    foreignField: '_id', // is equal to `foreignField`)
 });
 
+// ObjectId("5eccd3faf3d811bfe648866c")
 module.exports = mongoose.model('products', productSchema, 'products');

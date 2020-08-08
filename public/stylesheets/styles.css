@@ -929,11 +929,9 @@ h1.page-header {
 	overflow: scroll;
 }
 
-
-
-
-
-
-
+.products table .phone-img {
+    max-width: 200px;
+    max-height: 100px;
+}
 
 

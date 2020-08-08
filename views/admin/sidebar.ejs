@@ -15,3 +15,6 @@
     </ul>
 
 </div>
+
+mongodump --db test --archive > backup.dump
+mongostore --archive < backup.dump
